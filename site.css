@@ -1,7 +1,6 @@
 /* ===== Shared design layer — A to Z Furniture Polish ===== */
 :root{--ink:#14110F;--paper:#F7F4EF;--brown:#76543B;--gold:#D9A66F}
-html{scroll-behavior:smooth;scroll-padding-top:88px}
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+html{scroll-behavior:auto;scroll-padding-top:112px}
 ::selection{background:#D9A66F;color:#14110F}
 :focus-visible{outline:2px solid #D9A66F;outline-offset:3px;border-radius:6px}
 body{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
@@ -46,3 +45,25 @@ background:radial-gradient(380px circle at var(--mx,50%) var(--my,50%),rgba(217,
 a[class*="bg-[#76543B]"],button[class*="bg-[#76543B]"]{transition:transform .25s,background-color .25s,box-shadow .25s}
 a[class*="bg-[#76543B]"]:hover,button[class*="bg-[#76543B]"]:hover{transform:translateY(-2px);box-shadow:0 14px 30px -12px rgba(118,84,59,.65)}
 
+
+/* hero word rotator: each word flips in place (CSS-driven, JS only swaps classes) */
+.rotator{perspective:700px}
+.rw{opacity:0;transform:rotateX(90deg);transform-origin:50% 50%;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+transition:transform .7s cubic-bezier(.22,1,.36,1),opacity .45s ease}
+.rw.is-active{opacity:1;transform:none}
+.rw.is-out{opacity:0;transform:rotateX(-90deg)}
+@media (prefers-reduced-motion:reduce){.rw{transition:none}}
+
+/* comfortable tap targets for text links on phones */
+@media (max-width:767px){
+  footer a:not([class*="rounded"]):not([class*="h-1"]):not([class*="w-1"]){display:inline-block;padding-block:.55rem}
+  footer li{margin-block:0}
+  nav a[href^="./index.html"],nav a[href^="./products"]{padding-block:.4rem}
+}
+
+/* stop 3D-rotated cards or glows from creating a sideways scroll (clip never breaks sticky/pinning) */
+html,body{overflow-x:clip}
+#process,#polishing,#hero{overflow-x:clip}
+@media (max-width:767px){
+  main a[href^="tel:"],main nav a,main ol a,main a[href="./index.html"],main a[href="./products.html"]{display:inline-block;padding-block:.6rem}
+}
