@@ -22,7 +22,7 @@
       c.hidden = !show;
       if (show && !reduce) {
         c.animate(
-          [{ opacity: 0, transform: "perspective(900px) rotateX(-35deg) translateY(24px)" }, { opacity: 1, transform: "none" }],
+          [{ opacity: 0, transform: "perspective(1100px) rotateX(-35deg) translateY(24px)" }, { opacity: 1, transform: "none" }],
           { duration: 550, delay: n * 70, easing: "cubic-bezier(.22,1,.36,1)", fill: "backwards" }
         );
         n++;
@@ -38,14 +38,16 @@
 
   // ---- Mobile stacking cards: each card sticks, next one slides over it ----
   const mq = matchMedia("(max-width: 767px)");
-  const HEADER = 84, STEP = 14;
+  const hdrEl = document.querySelector("header");
+  const headerH = () => Math.round((hdrEl ? hdrEl.getBoundingClientRect().height : 84) + 8);
+  const STEP = 14;
   let ticking = false;
   function layoutStack() {
     const v = cards.filter((c) => !c.hidden);
     v.forEach((c, i) => {
-      c.style.top = mq.matches ? HEADER + i * STEP + "px" : "";
+      c.style.top = mq.matches ? headerH() + i * STEP + "px" : "";
       c.style.zIndex = mq.matches ? String(i + 1) : "";
-      if (!mq.matches) { c.style.transform = ""; c.style.opacity = ""; }
+      if (!mq.matches) { c.style.transform = "";  }
     });
     updateScale();
   }
@@ -55,11 +57,10 @@
     const v = cards.filter((c) => !c.hidden);
     const vh = innerHeight;
     v.forEach((c, i) => {
-      if (i === 0) { c.style.transform = ""; c.style.opacity = ""; return; }
+      if (i === 0) { c.style.transform = "";  return; }
       const top = c.getBoundingClientRect().top;
       const t = Math.min(1, Math.max(0, (vh - top - 60) / (vh * 0.5)));
-      c.style.transform = t >= 1 ? "" : "perspective(900px) rotateX(" + (-(1 - t) * 60).toFixed(1) + "deg)";
-      c.style.opacity = (0.35 + 0.65 * t).toFixed(2);
+      c.style.transform = t >= 1 ? "" : "perspective(1100px) rotateX(" + (-(1 - t) * 38).toFixed(1) + "deg)";
     });
   }
   addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(updateScale); } }, { passive: true });
@@ -79,7 +80,8 @@
     lbImg.src = img.currentSrc || img.src;
     lbImg.alt = img.alt;
     lbTitle.textContent = card.querySelector("h4").textContent;
-    lbSub.textContent = "Starting from " + card.querySelector("p.text-2xl, p.sm\\:text-3xl").textContent.trim();
+    const q = card.querySelector("[data-price]");
+    lbSub.textContent = q ? "Starting from " + q.dataset.price : "";
     lbImg.style.animation = "none"; lbImg.offsetWidth; lbImg.style.animation = "";
   }
   function open(card) {
