@@ -361,8 +361,9 @@
           <div class="flex lg:hidden">
             <button
               type="button"
-              command="show-modal"
-              commandfor="mobile-menu"
+              data-mm-open
+              aria-haspopup="dialog"
+              aria-controls="mobile-menu"
               class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-400"
             >
               <span class="sr-only">Open main menu</span>
@@ -401,9 +402,7 @@
           </el-popover-group>
 
           <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-            <a href="#" class="text-sm/6 font-semibold text-white"
-              > <span aria-hidden="true">&rarr;</span></a
-            >
+            <a href="#contact" class="inline-flex items-center gap-2 rounded-full bg-[#D9A66F] px-5 py-2.5 text-sm font-semibold text-[#1d1a17] transition hover:bg-[#E8C08F]">Get a Quote <span aria-hidden="true">&rarr;</span></a>
           </div>
         </nav>
                 <style>
@@ -454,6 +453,7 @@
               d.classList.add("closing");
               setTimeout(function () { d.classList.remove("closing"); d.close(); }, 330);
             }
+            document.querySelectorAll("[data-mm-open]").forEach(function (b) { b.addEventListener("click", function () { if (!d.open) d.showModal(); }); });
             d.querySelectorAll("[data-mm-close]").forEach(function (el) { el.addEventListener("click", close); });
             d.addEventListener("cancel", function (e) { e.preventDefault(); close(); });
             d.addEventListener("click", function (e) { if (e.target === d) close(); });
@@ -483,13 +483,12 @@
                 <span data-hero class="block">Beautiful Furniture.</span>
                 <span data-hero class="block">
                   Beautifully
-                  <span class="rotator relative inline-block align-bottom overflow-hidden h-[1.08em] text-transparent bg-clip-text bg-gradient-to-r from-[#E8C08F] via-[#D9A66F] to-[#B88454]">
-                    <span class="rotator-track flex flex-col">
-                      <span class="block h-[1.08em]">Restored.</span>
-                      <span class="block h-[1.08em]">Polished.</span>
-                      <span class="block h-[1.08em]">Refinished.</span>
-                      <span class="block h-[1.08em]">Restored.</span>
-                    </span>
+                  <span class="rotator relative block sm:inline-block mx-auto sm:mx-0 w-max max-w-full align-bottom text-[#E3B27A]">
+                    <span class="sr-only">Restored, Polished or Refinished.</span>
+                    <span aria-hidden="true" class="invisible block whitespace-nowrap">Refinished.</span>
+                    <span aria-hidden="true" class="rw is-active absolute inset-0 whitespace-nowrap text-center sm:text-left">Restored.</span>
+                    <span aria-hidden="true" class="rw absolute inset-0 whitespace-nowrap text-center sm:text-left">Polished.</span>
+                    <span aria-hidden="true" class="rw absolute inset-0 whitespace-nowrap text-center sm:text-left">Refinished.</span>
                   </span>
                 </span>
               </h1>
@@ -1845,7 +1844,7 @@
           <!-- View All -->
           <!-- <div class="flex justify-center mt-14 lg:mt-16">
             <a
-              href="#"
+              href="./products.html"
               class="inline-flex items-center gap-3 bg-[#292826] text-white px-7 py-4 rounded-lg font-semibold hover:bg-[#76543B] transition-all duration-300"
             >
               View All Products
@@ -2434,12 +2433,12 @@
               .proc-rail-item:hover .proc-title{color:#292826}
               @media (max-width:1023px),(prefers-reduced-motion:reduce){
                 .proc-stage{display:block}
-                .proc-step{position:sticky;top:calc(84px + var(--i)*14px);margin-bottom:24px;min-height:340px;transform-origin:center top;will-change:transform}
+                .proc-step{position:sticky;top:calc(var(--proc-off,104px) + var(--i)*14px);margin-bottom:24px;min-height:340px;transform-origin:center top;will-change:transform}
                 .proc-rail{display:none}
               }
               @media (min-width:1024px) and (prefers-reduced-motion:no-preference){
-                .proc{min-height:calc(100vh - 110px);display:flex;align-items:center}
-                .proc-stage{position:relative;height:440px;perspective:1400px}
+                .proc{height:calc(100vh - var(--proc-off,112px));min-height:480px;display:flex;align-items:center}
+                .proc-stage{position:relative;height:clamp(340px,calc(100vh - var(--proc-off,112px) - 100px),460px);perspective:1400px}
                 .proc-step{position:absolute;inset:0;opacity:0;visibility:hidden;transform:rotateX(-90deg);transform-origin:center;backface-visibility:hidden;-webkit-backface-visibility:hidden;transition:opacity .45s ease,transform .8s cubic-bezier(.22,1,.36,1),visibility 0s linear .8s}
                 .proc-step[data-state="after"]{transform:rotateX(90deg)}
                 .proc-step[data-state="active"]{opacity:1;visibility:visible;transform:none;transition:opacity .5s ease .25s,transform .8s cubic-bezier(.22,1,.36,1) .25s,visibility 0s}
@@ -3401,11 +3400,6 @@
             <p>© 2026 A to Z Furniture Polish. All rights reserved.</p>
 
             <div class="flex items-center gap-6">
-              <a href="#" class="hover:text-white transition-colors">
-                Privacy Policy
-              </a>
-
-              <a href="#" class="hover:text-white transition-colors"> Terms </a>
             </div>
           </div>
         </div>
