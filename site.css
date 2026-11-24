@@ -1,0 +1,48 @@
+/* ===== Shared design layer — A to Z Furniture Polish ===== */
+:root{--ink:#14110F;--paper:#F7F4EF;--brown:#76543B;--gold:#D9A66F}
+html{scroll-behavior:smooth;scroll-padding-top:88px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+::selection{background:#D9A66F;color:#14110F}
+:focus-visible{outline:2px solid #D9A66F;outline-offset:3px;border-radius:6px}
+body{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+
+/* thin warm scrollbar */
+html{scrollbar-width:thin;scrollbar-color:#B88454 #14110F}
+::-webkit-scrollbar{width:10px}::-webkit-scrollbar-track{background:#14110F}
+::-webkit-scrollbar-thumb{background:#76543B;border-radius:10px;border:2px solid #14110F}
+
+/* headings keep the original Inter font */
+#hero h1{line-height:1.02}
+
+/* fine film grain for depth (very subtle) */
+body::after{content:"";position:fixed;inset:0;z-index:70;pointer-events:none;opacity:.045;
+background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+
+/* cursor spotlight on cards (set by site-common.js) */
+.spot{position:relative}
+.spot::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;transition:opacity .35s;
+background:radial-gradient(380px circle at var(--mx,50%) var(--my,50%),rgba(217,166,111,.16),transparent 62%);z-index:5}
+.spot:hover::after{opacity:1}
+
+/* richer card motion */
+.product-card img,#services .group img,#projects .project-slider img{transition:transform .9s cubic-bezier(.22,1,.36,1)}
+#services .group:hover img{transform:scale(1.07)}
+.product-card:hover .product-slider{box-shadow:0 30px 60px -30px rgba(41,40,38,.45)}
+.product-card .product-slider{transition:box-shadow .4s}
+#testimonials article{transition:transform .4s cubic-bezier(.22,1,.36,1),box-shadow .4s}
+#testimonials article:hover{box-shadow:0 30px 60px -30px rgba(41,40,38,.35)}
+
+/* dark "projects" band for rhythm: light → light → dark */
+#projects{background:var(--ink)!important;color:#fff}
+#projects h2{color:#fff!important}
+#projects h2 span{color:#D9A66F!important}
+#projects p[class*="76543B"]{color:#D9A66F!important}
+#projects p[class*="706C66"]{color:rgba(255,255,255,.6)!important}
+
+/* process: connecting line that draws in */
+#process .process-line{transform-origin:left;}
+
+/* buttons: crisper press feedback */
+a[class*="bg-[#76543B]"],button[class*="bg-[#76543B]"]{transition:transform .25s,background-color .25s,box-shadow .25s}
+a[class*="bg-[#76543B]"]:hover,button[class*="bg-[#76543B]"]:hover{transform:translateY(-2px);box-shadow:0 14px 30px -12px rgba(118,84,59,.65)}
+
