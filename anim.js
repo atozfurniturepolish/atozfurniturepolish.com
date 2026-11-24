@@ -10,15 +10,19 @@
   gsap.from("[data-hero]", { y: 36, opacity: 0, duration: 0.8, ease: "power3.out", stagger: 0.12 });
   gsap.from(".hero-img", { scale: 1.3, duration: 1.8, ease: "power2.out" });
 
-  // 02 Word rotator
-  const track = document.querySelector(".rotator-track");
-  if (track) {
-    const n = track.children.length - 1;
-    const tl = gsap.timeline({ repeat: -1, delay: 1.6 });
-    for (let i = 1; i <= n; i++) {
-      tl.to(track, { yPercent: -(100 / (n + 1)) * i, duration: 0.6, ease: "power3.inOut" }, "+=1.6");
-    }
-    tl.set(track, { yPercent: 0 });
+  // 02 Word rotator: flip each word in place
+  const words = [].slice.call(document.querySelectorAll(".rotator .rw"));
+  if (words.length > 1) {
+    let cur = 0;
+    setInterval(function () {
+      const prev = words[cur];
+      cur = (cur + 1) % words.length;
+      prev.classList.remove("is-active");
+      prev.classList.add("is-out");
+      words[cur].classList.remove("is-out");
+      words[cur].classList.add("is-active");
+      setTimeout(function () { prev.classList.remove("is-out"); }, 800);
+    }, 2400);
   }
 
   // 05 Count-up (once)
