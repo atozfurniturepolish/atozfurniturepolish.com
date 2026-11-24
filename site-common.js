@@ -40,4 +40,20 @@
         scrollTrigger: { trigger: el, start: "top 90%", once: true } });
     });
   }
+
+  // smooth anchors (JS, so it never interferes with ScrollTrigger measuring)
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest && e.target.closest('a[href^="#"]');
+    if (!a || e.defaultPrevented) return;
+    var id = a.getAttribute("href").slice(1);
+    if (!id) { e.preventDefault(); scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" }); return; }
+    var t = document.getElementById(id);
+    if (!t) return;
+    e.preventDefault();
+    var hdr = document.querySelector("header");
+    var off = (hdr ? hdr.getBoundingClientRect().height : 0) + 8;
+    var y = t.getBoundingClientRect().top + scrollY - off;
+    scrollTo({ top: Math.max(0, y), behavior: reduce ? "auto" : "smooth" });
+    history.replaceState(null, "", "#" + id);
+  });
 })();
